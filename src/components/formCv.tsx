@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,7 +20,7 @@ import { DatePicker } from "./datePicker";
 
 export default function FormCv() {
   return (
-    <Card className="w-[500px] dark">
+    <Card className="w-1/2 max-w-lg dark">
       <CardHeader>
         <CardTitle>cv Image Generation</CardTitle>
         <CardDescription>Export your snap-shots in one click</CardDescription>
