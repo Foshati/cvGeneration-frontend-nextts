@@ -6,6 +6,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+
+
+
 import { ImgAvatar } from "./imgAvatar";
 import { Badge } from "./ui/badge";
 
@@ -27,9 +30,9 @@ export default function DisplayCv() {
 
           <p className="text-slate-400 text-sm">usa</p>
           <div className="flex gap-2 mt-3">
-            <Badge>html</Badge>
-            <Badge>css</Badge>
-            <Badge>js</Badge>
+            <Badge variant="secondary">css</Badge>
+            <Badge variant="secondary">html</Badge>
+            <Badge variant="secondary">js</Badge>
           </div>
         </div>
       </CardContent>
