@@ -1,10 +1,15 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export function ImgAvatar() {
+interface ImgAvatarProps {
+  avatarUrl: string | null;
+  fullName: string;
+}
+
+export function ImgAvatar({ avatarUrl, fullName }: ImgAvatarProps) {
   return (
     <Avatar>
-      <AvatarImage src="https://github.com/foshati.png" alt="@shadcn" />
-      <AvatarFallback>CN</AvatarFallback>
+      <AvatarImage src={avatarUrl ?? undefined} alt={fullName} />
+      <AvatarFallback>{fullName[2]}</AvatarFallback>
     </Avatar>
   );
 }
