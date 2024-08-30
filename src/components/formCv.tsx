@@ -1,3 +1,5 @@
+// FormCv.tsx
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,19 +23,22 @@ import { DatePicker } from "./datePicker";
 interface DataProps {
   fullName: string;
   skills: string;
-  registerDate: number | null;
+  registerDate: Date | null;
   avatarUrl: string | null;
   country: string;
 }
 
 interface FormCvProps {
   data: DataProps;
-  setData: any;
+  setData: React.Dispatch<React.SetStateAction<DataProps>>;
 }
 
 export default function FormCv({ data, setData }: FormCvProps) {
-  const handleInputChange = (field: string, value: string | File | null) => {
-    setData((prevData: any) => ({
+  const handleInputChange = (
+    field: string,
+    value: string | File | null | Date
+  ) => {
+    setData((prevData) => ({
       ...prevData,
       [field]: value,
     }));
@@ -55,10 +60,17 @@ export default function FormCv({ data, setData }: FormCvProps) {
     });
   };
 
+  const handleDateChange = (date: Date | undefined) => {
+    setData({
+      ...data,
+      registerDate: date || null,
+    });
+  };
+
   return (
     <Card className="w-1/2 max-w-lg dark">
       <CardHeader>
-        <CardTitle>cv Image Generation</CardTitle>
+        <CardTitle>CV Image Generation</CardTitle>
         <CardDescription>Export your snap-shots in one click</CardDescription>
       </CardHeader>
       <CardContent>
@@ -70,7 +82,6 @@ export default function FormCv({ data, setData }: FormCvProps) {
                 id="name"
                 placeholder="Enter your full name"
                 value={data.fullName}
-                // onChange={(e) => handleInputChange("fullName", e.target.value)}
                 onChange={handleNameChange}
               />
             </div>
@@ -85,23 +96,14 @@ export default function FormCv({ data, setData }: FormCvProps) {
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="avatarUrl">Avatar</Label>
-              <Input
-                id="avatarUrl"
-                type="file"
-                onChange={handleImg}
-                /*   onChange={(e) =>
-                  handleInputChange("avatarUrl", e.target.files?.[0] || null)
-                } */
-              />
+              <Input id="avatarUrl" type="file" onChange={handleImg} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="DatePick">Register Date </Label>
               <DatePicker
                 id="DatePick"
-                value={data.registerDate}
-                onChange={(date: any) =>
-                  handleInputChange("registerDate", date)
-                }
+                value={data.registerDate || undefined}
+                onChange={handleDateChange}
               />
             </div>
             <div className="flex flex-col space-y-1.5">
@@ -125,7 +127,7 @@ export default function FormCv({ data, setData }: FormCvProps) {
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={() => setData({})}>
+        <Button variant="outline" onClick={() => setData({} as DataProps)}>
           Reset
         </Button>
         <Button>Export</Button>
