@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,50 +21,44 @@ import { DatePicker } from "./datePicker";
 interface DataProps {
   fullName: string;
   skills: string;
-  registerDate: Date | null;
+  registerDate: number | null;
   avatarUrl: string | null;
   country: string;
 }
 
-export default function FormCv() {
-  const [data, setData] = useState<DataProps>({
-    fullName: "",
-    skills: "",
-    registerDate: null,
-    avatarUrl: null,
-    country: "",
-  });
+interface FormCvProps {
+  data: DataProps;
+  setData: any;
+}
 
-  const handleInputChange = (
-    field: keyof DataProps,
-    value: string | Date | null
-  ) => {
-    setData((prevData) => ({
+export default function FormCv({ data, setData }: FormCvProps) {
+  const handleInputChange = (field: string, value: string | File | null) => {
+    setData((prevData: any) => ({
       ...prevData,
       [field]: value,
     }));
   };
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData({
+      ...data,
+      fullName: e.target.value,
+    });
+  };
+
   const handleImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     const url = file ? URL.createObjectURL(file) : null;
-    handleInputChange("avatarUrl", url);
-  };
-
-  const resetForm = () => {
     setData({
-      fullName: "",
-      skills: "",
-      registerDate: null,
-      avatarUrl: null,
-      country: "",
+      ...data,
+      avatarUrl: url,
     });
   };
 
   return (
     <Card className="w-1/2 max-w-lg dark">
       <CardHeader>
-        <CardTitle>CV Image Generation</CardTitle>
+        <CardTitle>cv Image Generation</CardTitle>
         <CardDescription>Export your snap-shots in one click</CardDescription>
       </CardHeader>
       <CardContent>
@@ -77,7 +70,8 @@ export default function FormCv() {
                 id="name"
                 placeholder="Enter your full name"
                 value={data.fullName}
-                onChange={(e) => handleInputChange("fullName", e.target.value)}
+                // onChange={(e) => handleInputChange("fullName", e.target.value)}
+                onChange={handleNameChange}
               />
             </div>
             <div className="flex flex-col space-y-1.5">
@@ -91,14 +85,23 @@ export default function FormCv() {
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="avatarUrl">Avatar</Label>
-              <Input id="avatarUrl" type="file" onChange={handleImg} />
+              <Input
+                id="avatarUrl"
+                type="file"
+                onChange={handleImg}
+                /*   onChange={(e) =>
+                  handleInputChange("avatarUrl", e.target.files?.[0] || null)
+                } */
+              />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="DatePick">Register Date </Label>
               <DatePicker
                 id="DatePick"
                 value={data.registerDate}
-                onChange={(date) => handleInputChange("registerDate", date)}
+                onChange={(date: any) =>
+                  handleInputChange("registerDate", date)
+                }
               />
             </div>
             <div className="flex flex-col space-y-1.5">
@@ -122,7 +125,7 @@ export default function FormCv() {
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={resetForm}>
+        <Button variant="outline" onClick={() => setData({})}>
           Reset
         </Button>
         <Button>Export</Button>

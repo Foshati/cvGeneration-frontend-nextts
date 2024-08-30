@@ -24,9 +24,6 @@ import { ImgAvatar } from "./imgAvatar";
 import { Badge } from "./ui/badge";
 
 export default function DisplayCv({ data, setData }: DisplayCvProps) {
-  const handleInputChange = (feild, value) => {
-    setData((prevData) => ({ ...prevData, [feild]: value }));
-  };
   return (
     <Card className="w-3/4 max-w-xl dark">
       <CardHeader>
@@ -39,7 +36,7 @@ export default function DisplayCv({ data, setData }: DisplayCvProps) {
         <div>
           <CardTitle>{data.fullName}</CardTitle>
           <CardDescription className="mt-1">
-            {!data.registerDate ? "Today" : ` ${data.registerDate}`}
+            {!data.registerDate ? "Today" : ` ${data.registerDate}days ago `}
           </CardDescription>
 
           <p className="text-slate-400 text-sm">{data.country}</p>
