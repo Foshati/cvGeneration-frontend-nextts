@@ -33,7 +33,12 @@ interface FormCvProps {
   setData: React.Dispatch<React.SetStateAction<DataProps>>;
 }
 
-export default function FormCv({ data, setData, dataObj }: FormCvProps) {
+export default function FormCv({
+  data,
+  setData,
+  dataObj,
+  saveImage,
+}: FormCvProps) {
   const handleInputChange = (
     field: string,
     value: string | File | null | Date
@@ -116,21 +121,40 @@ export default function FormCv({ data, setData, dataObj }: FormCvProps) {
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="usa">United States</SelectItem>
-                  <SelectItem value="germany">Germany</SelectItem>
-                  <SelectItem value="japan">Japan</SelectItem>
-                  <SelectItem value="brazil">Brazil</SelectItem>
+                  <SelectItem value="USA">United States</SelectItem>
+                  <SelectItem value="Germany">Germany</SelectItem>
+                  <SelectItem value="Japan">Japan</SelectItem>
+                  <SelectItem value="Brazil">Brazil</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
         </form>
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={() => setData(dataObj)}>
+      <CardFooter className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <Button
+          variant="outline"
+          onClick={() => setData(dataObj)}
+          className="w-full sm:w-auto"
+        >
           Reset
         </Button>
-        <Button>Export</Button>
+        <div className="flex gap-1 items-center w-full sm:w-auto">
+          <input
+            type="text"
+            value={data.fileName}
+            className="bg-stone-900 focus:outline-none text-slate-400 rounded-full text-center px-3 py-1 w-full"
+            onClick={(e) => e.target.select()}
+            onChange={(e) =>
+              setData((prev) => ({ ...prev, fileName: e.target.value.trim() }))
+            }
+            spellCheck={false}
+          />
+          <p>.png</p>
+        </div>
+        <Button onClick={saveImage} className="w-full sm:w-auto">
+          Export
+        </Button>
       </CardFooter>
     </Card>
   );

@@ -1,15 +1,16 @@
-// DisplayCv.tsx
 import React from "react";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { ImgAvatar } from "./imgAvatar";
 import { Badge } from "./ui/badge";
 import { differenceInDays } from "date-fns";
+import { forwardRef } from "react";
 
 interface DataProps {
   fullName: string;
@@ -25,7 +26,10 @@ interface DisplayCvProps {
   setData: React.Dispatch<React.SetStateAction<DataProps>>;
 }
 
-export default function DisplayCv({ data, setData }: DisplayCvProps) {
+const DisplayCv = forwardRef<HTMLDivElement, DisplayCvProps>(function DisplayCv(
+  { data, setData },
+  ref
+) {
   const getDaysAgo = () => {
     if (!data.registerDate) return "Today";
     const daysPassed = differenceInDays(new Date(), data.registerDate);
@@ -33,12 +37,7 @@ export default function DisplayCv({ data, setData }: DisplayCvProps) {
   };
 
   return (
-    <Card className="w-3/4 max-w-xl dark">
-      <CardHeader>
-        <CardTitle className="text-center p-2 bg-stone-900 rounded-lg lg:text-xl ">
-          {data.fileName}
-        </CardTitle>
-      </CardHeader>
+    <Card ref={ref} className="w-3/4 max-w-xl dark p-4 flex flex-col">
       <CardContent className="flex justify-center items-center gap-4">
         <ImgAvatar avatarUrl={data.avatarUrl} fullName={data.fullName} />
         <div>
@@ -54,6 +53,9 @@ export default function DisplayCv({ data, setData }: DisplayCvProps) {
           </div>
         </div>
       </CardContent>
+      <CardFooter className="mt-auto flex justify-end"></CardFooter>
     </Card>
   );
-}
+});
+
+export default DisplayCv;
