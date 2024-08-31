@@ -33,7 +33,7 @@ interface FormCvProps {
   setData: React.Dispatch<React.SetStateAction<DataProps>>;
 }
 
-export default function FormCv({ data, setData }: FormCvProps) {
+export default function FormCv({ data, setData, dataObj }: FormCvProps) {
   const handleInputChange = (
     field: string,
     value: string | File | null | Date
@@ -127,7 +127,7 @@ export default function FormCv({ data, setData }: FormCvProps) {
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={() => setData({} as DataProps)}>
+        <Button variant="outline" onClick={() => setData(dataObj)}>
           Reset
         </Button>
         <Button>Export</Button>

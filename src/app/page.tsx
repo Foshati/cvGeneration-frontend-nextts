@@ -14,12 +14,12 @@ interface CvData {
 }
 
 const dataObj: CvData = {
-  fullName: "foshati",
-  skills: "html css",
+  fullName: "",
+  skills: "",
   registerDate: null,
   avatarUrl: null,
-  fileName: "rc",
-  country: "usa",
+  fileName: "",
+  country: "",
 };
 
 export default function Home() {
@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <main className="flex flex-col justify-center items-center bg-[#0C0D0E] text-white h-screen gap-4 p-4">
       <DisplayCv data={data} setData={setData} />
-      <FormCv data={data} setData={setData} />
+      <FormCv data={data} setData={setData} dataObj={dataObj} />
     </main>
   );
 }
